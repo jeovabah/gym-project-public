@@ -9,13 +9,6 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  SelectValue,
-  SelectTrigger,
-  SelectItem,
-  SelectContent,
-  Select,
-} from "@/components/ui/select";
 import { RadioGroupItem, RadioGroup } from "@/components/ui/radio-group";
 import { Link } from "@/components/Link";
 import { CalendarIcon, DumbbellIcon, UserIcon, UsersIcon } from "lucide-react";

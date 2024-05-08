@@ -1,7 +1,7 @@
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { RadioGroupItem, RadioGroup } from "@/components/ui/radio-group";
+
 import { useState } from "react";
 
 const DaysOfWeek = [
@@ -14,9 +14,13 @@ const DaysOfWeek = [
   "Domingo",
 ];
 
+
 const RegistracionClient = () => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [selectedDayToPay, setSelectedDayToPay] = useState(1);
+  const [name,setName] = useState("")
+  const [status,setStatus] = useState(false)
+  const [time,setTime] = useState("")
   const toggleDay = (day: string) => {
     if (selectedDays.includes(day)) {
       setSelectedDays(selectedDays.filter((d) => d !== day));
@@ -29,14 +33,30 @@ const RegistracionClient = () => {
     setSelected(value);
   };
 
-  const handleConfirm = () => {
+  
+  
+
+  const handleConfirm = (e) => {
     // dados que serao enviados para o back end
+    e.preventDefault()
     const payload = {
       selectedDays: selectedDays,
+      nameClient: name,
+      statusPaid: status,
+      time: time,
       selectedDayToPay: selectedDayToPay,
     };
     console.log(payload);
+    handleClear()
   };
+
+  const handleClear = () =>{
+    setName("")
+    setTime("")
+    setStatus(false)
+    setSelectedDays([])
+    setSelectedDayToPay(1)
+  }
 
   return (
     <div className="max-w-6xl w-full mx-auto grid gap-6">
@@ -55,7 +75,7 @@ const RegistracionClient = () => {
             <form className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Nome</Label>
-                <Input id="name" placeholder="Nome do cliente" required />
+                <Input id="name" placeholder="Nome do cliente" required value={name} onChange={(e) =>{setName(e.target.value)}}/>
               </div>
               <div>
                 <Label className="font-semibold">Dias que ira treinar</Label>
@@ -85,21 +105,14 @@ const RegistracionClient = () => {
                   className="w-max bg-gray-300 p-2 rounded"
                   type="time"
                   id="training-time"
+                  onChange={(e)=>{setTime(e.target.value)}}
+                  value={time}
                 />
               </div>
               <div>
                 <Label className="font-semibold">Status do pagamento</Label>
                 <div className="mt-2 flex items-center space-x-4">
-                  <RadioGroup>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem id="paid" value="paid" />
-                      <Label htmlFor="paid">Pago</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem id="unpaid" value="unpaid" />
-                      <Label htmlFor="unpaid">Não pago</Label>
-                    </div>
-                  </RadioGroup>
+                  <input type="checkbox" className="toggle" onChange={(e)=>{setStatus(e.target.checked)}} checked={status} />
                 </div>
               </div>
               <div className="space-y-2">
@@ -127,7 +140,7 @@ const RegistracionClient = () => {
                 />
               </div>
               <button
-                onClick={handleConfirm}
+                onClick={(e) =>{handleConfirm(e)}}
                 className="
                     w-full
                     py-2

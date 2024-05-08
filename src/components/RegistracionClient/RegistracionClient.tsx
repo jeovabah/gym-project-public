@@ -1,149 +1,134 @@
-import {
-    CardTitle,
-    CardDescription,
-    CardHeader,
-    CardContent,
-    Card,
-  } from "@/components/ui/card";
-  import { Label } from "@/components/ui/label";
-  import { Input } from "@/components/ui/input";
-  import { Checkbox } from "@/components/ui/checkbox";
-  import { RadioGroupItem, RadioGroup } from "@/components/ui/radio-group";
+import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { RadioGroupItem, RadioGroup } from "@/components/ui/radio-group";
+import { useState } from "react";
+
+const DaysOfWeek = [
+  "Segunda",
+  "Terca",
+  "Quarta-feira",
+  "Quinta-feira",
+  "Sexta-feira",
+  "Sábado",
+  "Domingo",
+];
 
 const RegistracionClient = () => {
+  const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const [selectedDayToPay, setSelectedDayToPay] = useState(1);
+  const toggleDay = (day: string) => {
+    if (selectedDays.includes(day)) {
+      setSelectedDays(selectedDays.filter((d) => d !== day));
+    } else {
+      setSelectedDays([...selectedDays, day]);
+    }
+  };
+
+  const handleChange = (value, setSelected) => {
+    setSelected(value);
+  };
+
+  const handleConfirm = () => {
+    // dados que serao enviados para o back end
+    const payload = {
+      selectedDays: selectedDays,
+      selectedDayToPay: selectedDayToPay,
+    };
+    console.log(payload);
+  };
+
   return (
-    
     <div className="max-w-6xl w-full mx-auto grid gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Client Registration</CardTitle>
-              <CardDescription>
-                Register a new client for your gym.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="mx-auto max-w-md space-y-6">
-                <div className="space-y-2 text-center">
-                  <h1 className="text-3xl font-bold">Client Registration</h1>
-                  <p className="text-black dark:text-gray-400">
-                    Register a new client for your gym.
-                  </p>
+      <Card>
+        <CardHeader>
+          <CardTitle>Registro de clientes</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="mx-auto max-w-md space-y-6">
+            <div className="space-y-2 text-center">
+              <h1 className="text-3xl font-bold"></h1>
+              <p className="text-black dark:text-gray-400">
+                Registre um novo cliente para sua academia.
+              </p>
+            </div>
+            <form className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Nome</Label>
+                <Input id="name" placeholder="Nome do cliente" required />
+              </div>
+              <div>
+                <Label className="font-semibold">Dias que ira treinar</Label>
+                <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                  {DaysOfWeek.map((day) => (
+                    <div key={day} className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        id={day.toLowerCase()}
+                        name="training-days"
+                        checked={selectedDays.includes(day)}
+                        onChange={() => toggleDay(day)}
+                      />
+                      <label
+                        className="text-sm font-normal"
+                        htmlFor={day.toLowerCase()}
+                      >
+                        {day}
+                      </label>
+                    </div>
+                  ))}
                 </div>
-                <form className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Name</Label>
-                    <Input id="name" placeholder="Enter client name" required />
-                  </div>
-                  <div>
-                    <Label className="font-semibold">Training Days</Label>
-                    <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
-                      <div className="flex items-center space-x-2">
-                        <Checkbox id="monday" name="training-days" />
-                        <Label className="text-sm font-normal" htmlFor="monday">
-                          Monday
-                        </Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox id="tuesday" name="training-days" />
-                        <Label
-                          className="text-sm font-normal"
-                          htmlFor="tuesday"
-                        >
-                          Tuesday
-                        </Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox id="wednesday" name="training-days" />
-                        <Label
-                          className="text-sm font-normal"
-                          htmlFor="wednesday"
-                        >
-                          Wednesday
-                        </Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox id="thursday" name="training-days" />
-                        <Label
-                          className="text-sm font-normal"
-                          htmlFor="thursday"
-                        >
-                          Thursday
-                        </Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox id="friday" name="training-days" />
-                        <Label className="text-sm font-normal" htmlFor="friday">
-                          Friday
-                        </Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox id="saturday" name="training-days" />
-                        <Label
-                          className="text-sm font-normal"
-                          htmlFor="saturday"
-                        >
-                          Saturday
-                        </Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox id="sunday" name="training-days" />
-                        <Label className="text-sm font-normal" htmlFor="sunday">
-                          Sunday
-                        </Label>
-                      </div>
+              </div>
+              <div className="space-y-2 flex flex-col">
+                <Label htmlFor="training-time">Horário do treino</Label>
+                <input
+                  className="w-max bg-gray-300 p-2 rounded"
+                  type="time"
+                  id="training-time"
+                />
+              </div>
+              <div>
+                <Label className="font-semibold">Status do pagamento</Label>
+                <div className="mt-2 flex items-center space-x-4">
+                  <RadioGroup>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem id="paid" value="paid" />
+                      <Label htmlFor="paid">Pago</Label>
                     </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="training-time">Training Time</Label>
-                    <select
-                      id="training-time"
-                      className="w-full bg-white p-2 border rounded-md"
-                    >
-                      <option value="6am-8am">6am - 8am</option>
-                      <option value="8am-10am">8am - 10am</option>
-                      <option value="10am-12pm">10am - 12pm</option>
-                      <option value="4pm-6pm">4pm - 6pm</option>
-                      <option value="6pm-8pm">6pm - 8pm</option>
-                    </select>
-                  </div>
-                  <div>
-                    <Label className="font-semibold">Payment Status</Label>
-                    <div className="mt-2 flex items-center space-x-4">
-                      <div className="flex items-center space-x-2">
-                        <RadioGroup defaultValue="paid" name="payment-status">
-                          <RadioGroupItem id="paid" value="paid" />
-                        </RadioGroup>
-                        <Label className="text-sm font-normal" htmlFor="paid">
-                          Paid
-                        </Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroup defaultValue="paid" name="payment-status">
-                          <RadioGroupItem id="unpaid" value="unpaid" />
-                        </RadioGroup>
-                        <Label className="text-sm font-normal" htmlFor="unpaid">
-                          Unpaid
-                        </Label>
-                      </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem id="unpaid" value="unpaid" />
+                      <Label htmlFor="unpaid">Não pago</Label>
                     </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="payment-day">Payment Day</Label>
-                    <select
-                      id="payment-day"
-                      className="w-full bg-white p-2 border rounded-md"
-                    >
-                      <option value="monday">Monday</option>
-                      <option value="tuesday">Tuesday</option>
-                      <option value="wednesday">Wednesday</option>
-                      <option value="thursday">Thursday</option>
-                      <option value="friday">Friday</option>
-                      <option value="saturday">Saturday</option>
-                      <option value="sunday">Sunday</option>
-                    </select>
-                  </div>
-                  <button
-                    className="
+                  </RadioGroup>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="payment-day">Dia do pagamento</Label>
+                <input
+                  className="w-full p-2 bg-gray-300 rounded"
+                  type="text"
+                  inputMode="numeric"
+                  id="payment-day"
+                  required
+                  value={selectedDayToPay}
+                  onChange={(e) => {
+                    let value = e?.target?.value;
+                    value = value.replace(/\D/g, "");
+
+                    if (Number(value) > 30) {
+                      setSelectedDayToPay(30);
+                      return;
+                    }
+                    handleChange(value, setSelectedDayToPay);
+                  }}
+                  pattern="[0-9]*"
+                  min={1}
+                  max={30}
+                />
+              </div>
+              <button
+                onClick={handleConfirm}
+                className="
                     w-full
                     py-2
                     text-white
@@ -155,16 +140,16 @@ const RegistracionClient = () => {
                     focus:outline-none
                     focus:ring-opacity-50
                   "
-                    type="submit"
-                  >
-                    Register Client
-                  </button>
-                </form>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-  )
-}
+                type="submit"
+              >
+                Registrar Cliente
+              </button>
+            </form>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
 
-export default RegistracionClient
+export default RegistracionClient;

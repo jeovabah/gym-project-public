@@ -13,10 +13,10 @@ const HeaderComponent = () =>{
           <span className="sr-only">Gym Management</span>
         </Link>
         <nav className="hidden font-medium sm:flex flex-row items-center gap-5 text-sm lg:gap-6">
-          <Link className="font-bold" href="#">
+          <Link className="font-bold" href="/">
             Dashboard
           </Link>
-          <Link className="text-black dark:text-gray-400" href="#">
+          <Link className="text-black dark:text-gray-400" href="/Clients">
             Clients
           </Link>
           <Link className="text-black dark:text-gray-400" href="#">

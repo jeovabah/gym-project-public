@@ -25,11 +25,11 @@ const Clients = () => {
   )
 
   const getClient = async () => {
-    const Reposta = await api.get("d0d20f09-a7af-4097-b6d0-35bb33b1af43")
+    const Reposta = await api.get("client")
     if (Reposta.data != null) {
-      setClients(Reposta.data)
+      setClients(Reposta.data.response)
     }
-    console.log(Reposta.data)
+    console.log(Reposta.data.resposnse)
 
   }
 

@@ -7,9 +7,9 @@ import { useEffect, useState } from "react"
 interface ClientProps{
   name: string,
   statusPaid: boolean,
-  time: string
-  dayToPay: number
-
+  time: string,
+  dayToPay: number,
+  id: number
 }
 
 
@@ -46,8 +46,8 @@ const Clients = () => {
                 <TableRow>
                   <TableHead>Nome</TableHead>
                   <TableHead>Status de Pagamento</TableHead>
-                  <TableHead>Horario de Treino</TableHead>
                   <TableHead>Dia de Pagamento</TableHead>
+                  <TableHead>Ações</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -65,7 +65,9 @@ const Clients = () => {
                         status={client.statusPaid == true ? "pago" : "nao pago"}
                         date={client.time}
                         selectedDayToPay={client.dayToPay}
+                        id={client.id}
                         key={i}
+                        getClient={getClient}
                       />
                     )
                   })

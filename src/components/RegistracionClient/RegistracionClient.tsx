@@ -3,6 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
 import { useState } from "react";
+import { api } from "@/services/api/api";
 
 const DaysOfWeek = [
   "Segunda",
@@ -36,16 +37,18 @@ const RegistracionClient = () => {
   
   
 
-  const handleConfirm = (e) => {
+  const handleConfirm = async (e) => {
     // dados que serao enviados para o back end
     e.preventDefault()
     const payload = {
-      selectedDays: selectedDays,
-      nameClient: name,
+      
+      daysOfWeek: selectedDays,
+      name: name,
       statusPaid: status,
       time: time,
-      selectedDayToPay: selectedDayToPay,
+      dayToPay: selectedDayToPay,
     };
+    await api.post("/client/add",payload)
     console.log(payload);
     handleClear()
   };

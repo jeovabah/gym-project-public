@@ -5,10 +5,10 @@ import { api } from "@/services/api/api"
 import { useEffect, useState } from "react"
 
 interface ClientProps{
-  nameClient: string,
+  name: string,
   statusPaid: boolean,
   time: string
-  selectedDayToPay: number
+  dayToPay: number
 
 }
 
@@ -61,10 +61,10 @@ const Clients = () => {
 
                     return (
                       <ItemComponent
-                        name={client.nameClient}
+                        name={client.name }
                         status={client.statusPaid == true ? "pago" : "nao pago"}
                         date={client.time}
-                        selectedDayToPay={client.selectedDayToPay}
+                        selectedDayToPay={client.dayToPay}
                         key={i}
                       />
                     )

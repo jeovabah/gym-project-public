@@ -9,7 +9,8 @@ interface ClientProps{
   statusPaid: boolean,
   time: string,
   dayToPay: number,
-  id: number
+  id: number,
+  daysOfWeek: string[]
 }
 
 
@@ -62,12 +63,13 @@ const Clients = () => {
                     return (
                       <ItemComponent
                         name={client.name }
-                        status={client.statusPaid == true ? "pago" : "nao pago"}
+                        status={client.statusPaid == true ? "PAGO" : "NAO PAGO"}
                         date={client.time}
                         selectedDayToPay={client.dayToPay}
                         id={client.id}
                         key={i}
                         getClient={getClient}
+                        daysOfWeek={client.daysOfWeek}
                       />
                     )
                   })

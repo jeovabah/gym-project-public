@@ -1,82 +1,64 @@
-import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-
 import { useState } from "react";
+import { DaysOfWeek } from "../RegistracionClient/RegistracionClient"
+import { Input } from "../ui/input"
+import { Label } from "../ui/label"
 import { api } from "@/services/api/api";
 
 
-export const DaysOfWeek = [
-  "Segunda",
-  "Terca",
-  "Quarta-feira",
-  "Quinta-feira",
-  "Sexta-feira",
-  "Sábado",
-  "Domingo",
-];
+const EditContent = (props) => {
 
-
-const RegistracionClient = () => {
-  const [selectedDays, setSelectedDays] = useState<string[]>([]);
-  const [selectedDayToPay, setSelectedDayToPay] = useState(1);
-  const [name,setName] = useState("")
-  const [status,setStatus] = useState(false)
-  const [time,setTime] = useState("")
-  const toggleDay = (day: string) => {
-    if (selectedDays.includes(day)) {
-      setSelectedDays(selectedDays.filter((d) => d !== day));
-    } else {
-      setSelectedDays([...selectedDays, day]);
-    }
-  };
-
-  const handleChange = (value, setSelected) => {
-    setSelected(value);
-  };
-
-  
-  
-
-  const handleConfirm = async (e) => {
-    // dados que serao enviados para o back end
-    e.preventDefault()
-    const payload = {
-      
-      daysOfWeek: selectedDays,
-      name: name,
-      statusPaid: status,
-      time: time,
-      dayToPay: selectedDayToPay,
+    const [selectedDays, setSelectedDays] = useState<string[]>([]);
+    const [selectedDayToPay, setSelectedDayToPay] = useState(1);
+    const [status,setStatus] = useState(false)
+    const [name,setName] = useState("")
+    const [time,setTime] = useState("")
+    
+    
+    const toggleDay = (day: string) => {
+        if (selectedDays.includes(day)) {
+            setSelectedDays(selectedDays.filter((d) => d !== day));
+        } else {
+            setSelectedDays([...selectedDays, day]);
+        }
     };
-    await api.post("/client/add",payload)
-    console.log(payload);
-    handleClear()
-  };
+    
+    
+    const handleChange = (value, setSelected) => {
+        setSelected(value);
+      };
+    
+    
+    const handleConfirm = async (e) => {
+        // dados que serao enviados para o back end
+        e.preventDefault()
+        const payload = {
+          
+          daysOfWeek: selectedDays,
+          name: name,
+          statusPaid: status,
+          time: time,
+          dayToPay: selectedDayToPay,
+        };
+        await api.put(`/client/update/${props.id}`,payload)
+        console.log(payload);
+        handleClear()
+        props.setShowEdit(false)
+        props.getClient()
+        //pq?
+    };
 
-  const handleClear = () =>{
-    setName("")
-    setTime("")
-    setStatus(false)
-    setSelectedDays([])
-    setSelectedDayToPay(1)
-  }
+    const handleClear = () =>{
+        setName("")
+        setTime("")
+        setStatus(false)
+        setSelectedDays([])
+        setSelectedDayToPay(1)
+    }
 
-  return (
-    <div className="max-w-6xl w-full mx-auto grid gap-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Registro de clientes</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="mx-auto max-w-md space-y-6">
-            <div className="space-y-2 text-center">
-              <h1 className="text-3xl font-bold"></h1>
-              <p className="text-black dark:text-gray-400">
-                Registre um novo cliente para sua academia.
-              </p>
-            </div>
-            <form className="space-y-4">
+    
+
+      return (
+    <form className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Nome</Label>
                 <Input id="name" placeholder="Nome do cliente" required value={name} onChange={(e) =>{setName(e.target.value)}}/>
@@ -144,7 +126,12 @@ const RegistracionClient = () => {
                 />
               </div>
               <button
-                onClick={(e) =>{handleConfirm(e)}}
+                onClick={(e) =>{
+                    if(name != ""){
+                    handleConfirm(e)
+                    
+                }
+                }}
                 className="
                     w-full
                     py-2
@@ -159,14 +146,10 @@ const RegistracionClient = () => {
                   "
                 type="submit"
               >
-                Registrar Cliente
+                Atualizar 
               </button>
             </form>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-};
+  )
+}
 
-export default RegistracionClient;
+export default EditContent

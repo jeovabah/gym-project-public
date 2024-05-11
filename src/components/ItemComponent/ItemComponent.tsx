@@ -82,7 +82,7 @@ const ItemComponent = (props) => {
       <span className="w-4 h-4 text-gray-500 dark:text-gray-400 cursor-pointer" >Editar</span>
       </button>
       <ModalContent
-        title={"Dias de treino da semana"}
+        title={"Editar Cliente"}
         showModal={showEdit}
         setShowModal={setShowEdit}
         cancelBtn={"FECHAR"}

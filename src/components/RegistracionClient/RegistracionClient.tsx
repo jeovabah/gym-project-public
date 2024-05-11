@@ -144,7 +144,10 @@ const RegistracionClient = () => {
                 />
               </div>
               <button
-                onClick={(e) =>{handleConfirm(e)}}
+                onClick={(e) =>{
+                  if(name != ""){
+                  handleConfirm(e)
+                }}}
                 className="
                     w-full
                     py-2

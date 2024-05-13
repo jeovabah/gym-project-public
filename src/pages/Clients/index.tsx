@@ -10,7 +10,7 @@ interface ClientProps{
   time: string,
   dayToPay: number,
   id: number,
-  daysOfWeek: string[]
+  daysOfWeek: [{}]
 }
 
 
@@ -19,7 +19,7 @@ const Clients = () => {
   const [clients, setClients] = useState([])
 
   useEffect(() => {
-    console.log("entrando no useEffect")
+    
     getClient()
 
   }, []
@@ -30,7 +30,7 @@ const Clients = () => {
     if (Reposta.data != null) {
       setClients(Reposta.data.response)
     }
-    console.log(Reposta.data.resposnse)
+    
 
   }
 
@@ -52,11 +52,6 @@ const Clients = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {/*<ItemComponent
-                name= "Teste1"
-                status="Active"
-                date="Classe 1 - 8 de Maio de 2023"
-  />*/}
                 {
                   clients.map((client:ClientProps, i) => {
 

@@ -54,7 +54,7 @@ const RegistracionClient = () => {
     };
 
     await api.post("/client/add", payload);
-    console.log(payload);
+    
     handleClear();
   };
 

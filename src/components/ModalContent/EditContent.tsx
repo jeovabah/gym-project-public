@@ -40,7 +40,7 @@ const EditContent = (props) => {
           dayToPay: selectedDayToPay,
         };
         await api.put(`/client/update/${props.id}`,payload)
-        console.log(payload);
+        
         handleClear()
         props.setShowEdit(false)
         props.getClient()

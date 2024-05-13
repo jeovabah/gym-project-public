@@ -44,7 +44,7 @@ const EditContent = (props) => {
         handleClear()
         props.setShowEdit(false)
         props.getClient()
-        //pq?
+        
     };
 
     const handleClear = () =>{
@@ -61,18 +61,22 @@ const EditContent = (props) => {
     <form className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Nome</Label>
-                <Input id="name" placeholder="Nome do cliente" required value={name} onChange={(e) =>{setName(e.target.value)}}/>
+                <Input id="name" placeholder={props.clientName} required defaultValue={props.clientName} onChange={(e) =>{setName(e.target.value)}}/>
               </div>
               <div>
                 <Label className="font-semibold">Dias que ira treinar</Label>
+                  
+                
                 <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
                   {DaysOfWeek.map((day) => (
+                    
                     <div key={day} className="flex items-center space-x-2">
+                      
                       <input
                         type="checkbox"
                         id={day.toLowerCase()}
                         name="training-days"
-                        checked={selectedDays.includes(day)}
+                        defaultChecked={props.daysOfWeek.includes(day)}
                         onChange={() => toggleDay(day)}
                       />
                       <label

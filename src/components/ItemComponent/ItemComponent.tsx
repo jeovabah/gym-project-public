@@ -90,6 +90,8 @@ const ItemComponent = (props) => {
           id={props.id}
           setShowEdit={setShowEdit}
           getClient={props.getClient}
+          clientName={props.name}
+          daysOfWeek={props.daysOfWeek}
         />}
       />
       </div>

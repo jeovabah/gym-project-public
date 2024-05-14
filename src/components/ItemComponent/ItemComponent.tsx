@@ -6,7 +6,7 @@ import { api } from "@/services/api/api";
 import { useState } from "react";
 import ModalContent from "../ModalContent/ModalContent";
 import Content from "../ModalContent/Content";
-import EditContent from "../ModalContent/EditContent";
+//import EditContent from "../ModalContent/EditContent";
 
 const ItemComponent = (props) => {
   const classeDoComponente =
@@ -21,7 +21,7 @@ const ItemComponent = (props) => {
 
   const [visible, setVisible] = useState(false);
   const [showMore, setShowMore] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
+  //const [showEdit, setShowEdit] = useState(false);
   
   return (
     <TableRow>
@@ -31,7 +31,7 @@ const ItemComponent = (props) => {
           {props.status}
         </Badge>
       </TableCell>
-      <TableCell>
+      <TableCell className="hidden md:table-cell">
         <div className="flex items-center gap-2">
           <Banknote className="w-4 h-4 text-gray-500 dark:text-gray-400" />
           <span>{props.selectedDayToPay}</span>
@@ -80,18 +80,20 @@ const ItemComponent = (props) => {
                 ))}
               </div>
             }
+            paymentContent={  
+              <TableCell>
+                <div className="flex items-center gap-2">
+                  <Banknote className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                  <span>{props.selectedDayToPay}</span>
+                </div>
+              </TableCell>
+
+            
+            }
           />
         </div>
 
-        <div className="gap-1">
-          {/*<button
-            className="mt-3 items-center gap-1"
-            onClick={() => setShowEdit(true)}
-          >
-            <span className="w-4 h-4 text-gray-500 dark:text-gray-400 cursor-pointer">
-              Editar
-            </span>
-          </button>*/}
+        {/* <div className="gap-1 md:hidden">
           <ModalContent
             title={"Editar Cliente"}
             showModal={showEdit}
@@ -107,7 +109,7 @@ const ItemComponent = (props) => {
               />
             }
           />
-        </div>
+        </div> */}
       </TableCell>
     </TableRow>
   );

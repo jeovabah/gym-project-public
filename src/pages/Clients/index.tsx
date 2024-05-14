@@ -29,7 +29,7 @@ const Clients = () => {
     const Reposta = await api.get("client")
     if (Reposta.data != null) {
       setClients(Reposta.data.response)
-    }
+    } 
     
 
   }
@@ -47,7 +47,7 @@ const Clients = () => {
                 <TableRow>
                   <TableHead>Nome</TableHead>
                   <TableHead>Status de Pagamento</TableHead>
-                  <TableHead>Dia de Pagamento</TableHead>
+                  <TableHead className="hidden md:table-cell" >Dia de Pagamento</TableHead>
                   <TableHead>Ações</TableHead>
                 </TableRow>
               </TableHeader>

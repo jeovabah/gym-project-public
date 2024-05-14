@@ -1,3 +1,4 @@
+import { TableHead } from "../ui/table";
 
 
 const ModalContent = (props) => {
@@ -26,7 +27,13 @@ const ModalContent = (props) => {
                       </span>
                     </button>
                   </div>
+                  
                   {props.content}
+                  
+                  
+                  <TableHead >Dia de Pagamento: </TableHead>
+                  {props.paymentContent}
+                  
                   {/*footer*/}
                   <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                     <button

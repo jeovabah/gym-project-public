@@ -4,19 +4,39 @@ import { CalendarIcon, UserIcon, UsersIcon } from "lucide-react";
 import CardInfo from "../CardInfo/CardInfo";
 import CardActiveTrainers from "../CardInfo/CardActiveTrainers";
 import CardTotalClasses from "../CardInfo/CardTotalClasses";
+import { useEffect, useState } from "react";
+import { api } from "@/services/api/api";
 
 
+interface activeClientsProps{
+  activeClients:number;
+}
 
 
 const InfoComponent = () => {
-  return (
+  const [activeClients,setActiveClients] = useState<activeClientsProps | null>(null);
+  useEffect(()=>{
 
-    <div className="max-w-6xl w-full mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3 text-black ">
+    getActiveClients()
+
+  })
+  
+  const getActiveClients = async () =>{
+    const response = await api.get("/client/quantityAll")
+    if(response.data != null){
+      setActiveClients(response.data.response)
+    }
+
+  }
+
+
+  return (
+      <div className="max-w-6xl w-full mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3 text-black ">
       <CardInfo
         title="Clientes Ativos"
-        description="Descrição"
+        description="Numero de Clientes Ativos"
         icon={<UsersIcon className="w-8 h-8 text-black dark:text-gray-400" />}
-        value={245}
+        value={activeClients ? activeClients.activeClients : 0}
       />
       <CardActiveTrainers
         title="Treinadores Ativos"

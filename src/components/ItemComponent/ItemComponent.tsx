@@ -45,8 +45,8 @@ const ItemComponent = (props) => {
               setVisible(true);
             }}
           >
-            <Trash2 className="w-4 h-4 text-red-500 dark:text-red-400 cursor-pointer" />
-            <span className="w-4 h-4 text-red-500 dark:text-red-400 cursor-pointer">
+            <Trash2 className="w-4 h-4 text-red-500 dark:text-red-400 cursor-pointer max-sm: items-center text-center" />
+            <span className="w-4 h-4 text-red-500 dark:text-red-400 cursor-pointer max-sm:hidden ">
               Deletar
             </span>
           </button>
@@ -81,7 +81,7 @@ const ItemComponent = (props) => {
               </div>
             }
             paymentContent={  
-              <TableCell>
+              <TableCell className="sm:hidden">
                 <div className="flex items-center gap-2">
                   <Banknote className="w-4 h-4 text-gray-500 dark:text-gray-400" />
                   <span>{props.selectedDayToPay}</span>

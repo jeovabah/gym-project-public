@@ -26,7 +26,7 @@ export default function Component() {
         setIsOpen(false); // Fecha o modal
         window.location.reload(); // Atualiza a página
     };
-    console.log(specialty)
+    
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>

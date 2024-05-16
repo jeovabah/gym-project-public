@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 import RegisterTrainerModal from "@/components/ModalContent/RegisterTrainerModal";
 import ModalAlert from "@/components/ModalAlert/ModalAlert";
 
-
 interface TrainersProps {
   id: number;
   name: string;
@@ -21,10 +20,8 @@ interface TrainersProps {
 }
 
 const Trainers = () => {
-  const [trainers, setTrainers] = useState([]);
-  const [visible, setVisible] = useState(false);
-  //const [visible, setVisible] = useState(false);}
-
+  const [trainers, setTrainers] = useState<TrainersProps[]>([]);
+  const [deleteTrainerId, setDeleteTrainerId] = useState<number | null>(null);
 
   useEffect(() => {
     getClient();
@@ -37,26 +34,18 @@ const Trainers = () => {
     }
   };
 
-  const handleDelete = async (id:number) => {
+  const handleDelete = async (id: number) => {
     await api.delete(`/trainer/delete/${id}`);
     getClient();
-    
-    
+    setDeleteTrainerId(null);
   };
-  return (
 
+  return (
     <div>
       <section className="container mx-auto px-4 md:px-6 py-12 text-black">
         <div className="flex justify-between items-center mb-6 text-black">
-          <h1 className="text-2xl font-bold text-black">
-            Listagem de Treinadores
-            
-          </h1>
-          
-          <RegisterTrainerModal
-            
-          />
-          
+          <h1 className="text-2xl font-bold text-black">Listagem de Treinadores</h1>
+          <RegisterTrainerModal />
         </div>
         <div className="grid gap-4 overflow-auto">
           <Card>
@@ -69,45 +58,34 @@ const Trainers = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {trainers.map((trainer: TrainersProps, i) => {
-                  return (
-                    <TableRow key={i}>
-                      <TableCell className="font-medium">
-                        {trainer.name}
-                      </TableCell>
-                      <TableCell>{trainer.specialty}</TableCell>
-                      <TableCell className="text-right">
-                        <Button
-                          className="mr-2 rounded"
-                          size="sm"
-                          variant="outline"
-                        >
-                          Ver
-                        </Button>
-                        <Button
-                          className="mr-2 rounded"
-                          size="sm"
-                          variant="outline"
-                        >
-                          Editar
-                        </Button>
-                        <Button className="rounded" size="sm" variant="outline" onClick={()=>setVisible(true)}>
-                          Deletar
-                        </Button>
-                        <ModalAlert 
-                            title={`Deseja realmente excluir ${trainer.name} ?`}
-                            showModal={visible}
-                            setShowModal={setVisible}
-                            deleteBtn="Deletar"
-                            cancelBtn="Cancelar"
-                            handleConfirm={() => handleDelete(trainer.id)}
+                {trainers.map((trainer: TrainersProps) => (
+                  <TableRow key={trainer.id}>
+                    <TableCell className="font-medium">{trainer.name}</TableCell>
+                    <TableCell>{trainer.specialty}</TableCell>
+                    <TableCell className="text-right">
+                      <Button className="mr-2 rounded" size="sm" variant="outline">Ver</Button>
+                      <Button className="mr-2 rounded" size="sm" variant="outline">Editar</Button>
+                      <Button
+                        className="rounded"
+                        size="sm"
+                        variant="outline"
+                        onClick={() => setDeleteTrainerId(trainer.id)}
+                      >
+                        Deletar
+                      </Button>
+                      {deleteTrainerId === trainer.id && (
+                        <ModalAlert
+                          title={`Deseja realmente excluir ${trainer.name}?`}
+                          showModal={deleteTrainerId === trainer.id}
+                          setShowModal={() => setDeleteTrainerId(null)}
+                          deleteBtn="Deletar"
+                          cancelBtn="Cancelar"
+                          handleConfirm={() => handleDelete(trainer.id)}
                         />
-                      </TableCell>
-                    </TableRow>
-
-                    
-                  );
-                })}
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </Card>

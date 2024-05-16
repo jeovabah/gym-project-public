@@ -10,7 +10,7 @@ export function CalendarRelatory() {
     "Quarta-feira",
     "Quinta-feira",
     "Sexta-feira",
-    "Sabado",
+    "Sábado",
     "Domingo",
   ];
 

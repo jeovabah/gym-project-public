@@ -55,7 +55,10 @@ export function CalendarRelatory() {
                             <AvatarFallback>{client.name[0]}</AvatarFallback>
                           </Avatar>
                           <span className="text-sm font-medium">
-                            {client.name}
+                            {client.name} -{" "}
+                            <span className="text-gray-500">
+                              "{client?.trainer?.name}"
+                            </span>
                           </span>
                         </div>
                       ))}

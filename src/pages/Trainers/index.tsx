@@ -10,6 +10,9 @@ import { Card } from "@/components/ui/card";
 import { api } from "@/services/api/api";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import RegisterTrainerModal from "@/components/ModalContent/RegisterTrainerModal";
+import ModalAlert from "@/components/ModalAlert/ModalAlert";
+
 
 interface TrainersProps {
   id: number;
@@ -19,6 +22,9 @@ interface TrainersProps {
 
 const Trainers = () => {
   const [trainers, setTrainers] = useState([]);
+  const [visible, setVisible] = useState(false);
+  //const [visible, setVisible] = useState(false);}
+
 
   useEffect(() => {
     getClient();
@@ -31,13 +37,26 @@ const Trainers = () => {
     }
   };
 
+  const handleDelete = async (id:number) => {
+    await api.delete(`/trainer/delete/${id}`);
+    getClient();
+    
+    
+  };
   return (
+
     <div>
       <section className="container mx-auto px-4 md:px-6 py-12 text-black">
         <div className="flex justify-between items-center mb-6 text-black">
           <h1 className="text-2xl font-bold text-black">
             Listagem de Treinadores
+            
           </h1>
+          
+          <RegisterTrainerModal
+            
+          />
+          
         </div>
         <div className="grid gap-4 overflow-auto">
           <Card>
@@ -54,9 +73,9 @@ const Trainers = () => {
                   return (
                     <TableRow key={i}>
                       <TableCell className="font-medium">
-                        {trainer?.name}
+                        {trainer.name}
                       </TableCell>
-                      <TableCell>{trainer?.specialty}</TableCell>
+                      <TableCell>{trainer.specialty}</TableCell>
                       <TableCell className="text-right">
                         <Button
                           className="mr-2 rounded"
@@ -72,11 +91,21 @@ const Trainers = () => {
                         >
                           Editar
                         </Button>
-                        <Button className="rounded" size="sm" variant="outline">
+                        <Button className="rounded" size="sm" variant="outline" onClick={()=>setVisible(true)}>
                           Deletar
                         </Button>
+                        <ModalAlert 
+                            title={`Deseja realmente excluir ${trainer.name} ?`}
+                            showModal={visible}
+                            setShowModal={setVisible}
+                            deleteBtn="Deletar"
+                            cancelBtn="Cancelar"
+                            handleConfirm={() => handleDelete(trainer.id)}
+                        />
                       </TableCell>
                     </TableRow>
+
+                    
                   );
                 })}
               </TableBody>

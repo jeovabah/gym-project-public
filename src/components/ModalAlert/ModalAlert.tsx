@@ -1,6 +1,6 @@
 
 
-export default function Modal(props) {
+export default function ModalAlert(props) {
   return (
     <>
       {props.showModal ? (

@@ -51,7 +51,7 @@ const RegistracionClient = () => {
       statusPaid: status,
       dayToPay: selectedDayToPay,
       daysOfWeek: daysAndTimes,
-    };
+    };  
 
     await api.post("/client/add", payload);
     

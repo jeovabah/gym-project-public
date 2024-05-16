@@ -19,10 +19,18 @@ const ItemComponent = (props) => {
     props.getClient();
   };
 
+  const handleUpdatePaid = async (checked) => {
+    setStatus(checked);
+    await api.put(`/client/update/${props.id}`, {
+      statusPaid: checked,
+    });
+    props.getClient();
+  };
+
   const [visible, setVisible] = useState(false);
   const [showMore, setShowMore] = useState(false);
-  //const [showEdit, setShowEdit] = useState(false);
-  
+  const [status, setStatus] = useState(props.status === "PAGO");
+
   return (
     <TableRow>
       <TableCell className="font-medium">{props.name}</TableCell>
@@ -30,6 +38,16 @@ const ItemComponent = (props) => {
         <Badge className={classeDoComponente} variant="outline">
           {props.status}
         </Badge>
+        <div className="mt-2 flex items-center space-x-4">
+          <input
+            type="checkbox"
+            className="toggle toggle-success"
+            onChange={(e) => {
+              handleUpdatePaid(e.target.checked);
+            }}
+            checked={status}
+          />
+        </div>
       </TableCell>
       <TableCell className="hidden md:table-cell">
         <div className="flex items-center gap-2">
@@ -75,20 +93,19 @@ const ItemComponent = (props) => {
             cancelBtn={"FECHAR"}
             content={
               <div>
-                {props.daysOfWeek && Object.entries(props.daysOfWeek).map(([day, times]:any) => (
-                  <Content day={day} time={times.join(', ')} key={day} />
-                ))}
+                {props.daysOfWeek &&
+                  Object.entries(props.daysOfWeek).map(([day, times]: any) => (
+                    <Content day={day} time={times.join(", ")} key={day} />
+                  ))}
               </div>
             }
-            paymentContent={  
+            paymentContent={
               <TableCell className="sm:hidden">
                 <div className="flex items-center gap-2">
                   <Banknote className="w-4 h-4 text-gray-500 dark:text-gray-400" />
                   <span>{props.selectedDayToPay}</span>
                 </div>
               </TableCell>
-
-            
             }
           />
         </div>

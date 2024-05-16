@@ -83,6 +83,7 @@ const Trainers = () => {
                           showModal={true}
                           setShowModal={() => setShowMoreId(null)}
                           cancelBtn='FECHAR'
+                          className={'hidden'}
                           content={
                             <div className="text-left text-black font-semibold text-lg">
                               <h1>Nome: {trainer.name}</h1>

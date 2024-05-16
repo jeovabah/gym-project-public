@@ -31,7 +31,7 @@ const ModalContent = (props) => {
                   {props.content}
                   
                   
-                  <TableHead className="sm:hidden" >Dia de Pagamento: </TableHead>
+                  <TableHead className={props.className} >Dia de Pagamento: </TableHead>
                   {props.paymentContent}
                   
                   {/*footer*/}

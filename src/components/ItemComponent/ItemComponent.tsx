@@ -91,7 +91,9 @@ const ItemComponent = (props) => {
             showModal={showMore}
             setShowModal={setShowMore}
             cancelBtn={"FECHAR"}
+            className={'sm:hidden'}
             content={
+
               <div>
                 {props.daysOfWeek &&
                   Object.entries(props.daysOfWeek).map(([day, times]: any) => (

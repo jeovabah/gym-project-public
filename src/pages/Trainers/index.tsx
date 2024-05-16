@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import RegisterTrainerModal from "@/components/ModalContent/RegisterTrainerModal";
 import ModalAlert from "@/components/ModalAlert/ModalAlert";
+import EditTrainerModal from "@/components/ModalContent/EditTrainerModal";
+import ModalContent from "@/components/ModalContent/ModalContent";
 
 interface TrainersProps {
   id: number;
@@ -22,6 +24,9 @@ interface TrainersProps {
 const Trainers = () => {
   const [trainers, setTrainers] = useState<TrainersProps[]>([]);
   const [deleteTrainerId, setDeleteTrainerId] = useState<number | null>(null);
+  const [showMoreId, setShowMoreId] = useState<number | null>(null);
+ 
+  
 
   useEffect(() => {
     getClient();
@@ -39,6 +44,8 @@ const Trainers = () => {
     getClient();
     setDeleteTrainerId(null);
   };
+
+
 
   return (
     <div>
@@ -63,8 +70,32 @@ const Trainers = () => {
                     <TableCell className="font-medium">{trainer.name}</TableCell>
                     <TableCell>{trainer.specialty}</TableCell>
                     <TableCell className="text-right">
-                      <Button className="mr-2 rounded" size="sm" variant="outline">Ver</Button>
-                      <Button className="mr-2 rounded" size="sm" variant="outline">Editar</Button>
+                      <Button 
+                      className="mr-2 rounded" 
+                      size="sm" 
+                      variant="outline"
+                      onClick={()=>{setShowMoreId(trainer.id)}}
+                      >Ver
+                      </Button>
+                      {showMoreId === trainer.id && (
+                        <ModalContent
+                          title={'Informações do Treinador'}
+                          showModal={true}
+                          setShowModal={() => setShowMoreId(null)}
+                          cancelBtn='FECHAR'
+                          content={
+                            <div className="text-left text-black font-semibold text-lg">
+                              <h1>Nome: {trainer.name}</h1>
+                              <p>Especialidade: {trainer.specialty}</p>
+                            </div>
+                          }
+                        />
+                      )}
+                      <EditTrainerModal
+                        id={trainer.id}
+                        name={trainer.name}
+                        specialty={trainer.specialty}
+                      />
                       <Button
                         className="rounded"
                         size="sm"

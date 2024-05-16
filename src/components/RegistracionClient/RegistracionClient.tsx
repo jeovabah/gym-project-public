@@ -14,12 +14,13 @@ export const DaysOfWeek = [
   "Domingo",
 ];
 
-const RegistracionClient = () => {
+const RegistracionClient = ({ trainers }) => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [selectedDayToPay, setSelectedDayToPay] = useState(1);
   const [name, setName] = useState("");
   const [status, setStatus] = useState(false);
   const [time, setTime] = useState("");
+  const [trainerId, setTrainerId] = useState<string>("");
 
   const toggleDay = (day: string) => {
     if (selectedDays.includes(day)) {
@@ -51,10 +52,11 @@ const RegistracionClient = () => {
       statusPaid: status,
       dayToPay: selectedDayToPay,
       daysOfWeek: daysAndTimes,
-    };  
+      trainerId,
+    };
 
     await api.post("/client/add", payload);
-    
+
     handleClear();
   };
 
@@ -133,6 +135,21 @@ const RegistracionClient = () => {
                     checked={status}
                   />
                 </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="trainer">Treinador</Label>
+                <select
+                  id="trainer"
+                  className="w-full p-2 bg-gray-300 rounded"
+                  onChange={(e) => setTrainerId(e.target.value)}
+                >
+                  <option value={undefined}>Selecione um treinador</option>
+                  {trainers.map((trainer: any, i) => (
+                    <option key={i} value={trainer.id}>
+                      {trainer?.name}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="payment-day">Dia do pagamento</Label>

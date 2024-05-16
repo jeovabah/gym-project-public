@@ -1,7 +1,7 @@
-import { CalendarIcon, UserIcon, UsersIcon } from "lucide-react";
+import { UserIcon, UsersIcon } from "lucide-react";
 import CardInfo from "../CardInfo/CardInfo";
 import CardActiveTrainers from "../CardInfo/CardActiveTrainers";
-import CardTotalClasses from "../CardInfo/CardTotalClasses";
+// import CardTotalClasses from "../CardInfo/CardTotalClasses";
 import { useEffect, useState } from "react";
 import { api } from "@/services/api/api";
 
@@ -9,7 +9,7 @@ interface activeClientsProps {
   activeClients: number;
 }
 
-const InfoComponent = () => {
+const InfoComponent = ({ trainers }) => {
   const [activeClients, setActiveClients] = useState<activeClientsProps | null>(
     null
   );
@@ -36,16 +36,16 @@ const InfoComponent = () => {
         title="Treinadores Ativos"
         description="Numero de Treinadores Ativos"
         icon={<UserIcon className="w-8 h-8 text-black dark:text-gray-400" />}
-        value={12}
+        value={trainers?.length || 0}
       />
-      <CardTotalClasses
+      {/* <CardTotalClasses
         title="Total de Turmas"
         description="Numero de turmas"
         icon={
           <CalendarIcon className="w-8 h-8 text-black dark:text-gray-400" />
         }
         value={68}
-      />
+      /> */}
     </div>
   );
 };

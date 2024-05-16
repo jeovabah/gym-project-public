@@ -43,9 +43,9 @@ export default function Component() {
                         </Label>
                         <Input className="col-span-3" id="name" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
                     </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label className="text-right text-black" htmlFor="especialidade">
-                            Especialidade
+                    <div className="gap-3 grid grid-cols-4 items-center max-sm:gap-8">
+                        <Label className="text-right text-black " htmlFor="especialidade">
+                            Especialidade 
                         </Label>
                         <Input className="col-span-3" id="especialidade" placeholder="Especialidade" value={specialty} onChange={(e) => setSpecialty(e.target.value)} />
                     </div>

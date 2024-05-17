@@ -34,7 +34,7 @@ export default function EditTrainerModal(props) {
             
                 <Button className="mr-2 rounded" size="sm" variant="outline" onClick={() => setIsOpen(true)}>Editar</Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px] bg-white text-black rounded">
+            <DialogContent className="sm:max-w-[425px] bg-white text-black rounded-lg "style={{borderRadius: '0.75rem'}}>
                 <DialogHeader>
                     <DialogTitle>Editar Treinador</DialogTitle>
                 </DialogHeader>
@@ -59,7 +59,8 @@ export default function EditTrainerModal(props) {
                         } else {
                             handleConfirm();
                         }
-                    }}>Confirmar</Button>
+                    }}
+                    className="rounded bg-green-500 text-white">Confirmar</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

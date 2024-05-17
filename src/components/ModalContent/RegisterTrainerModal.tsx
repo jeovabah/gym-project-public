@@ -32,7 +32,7 @@ export default function Component() {
             <DialogTrigger asChild>
                 <Button variant="outline" className="rounded" onClick={() => setIsOpen(true)}>Adicionar Treinador</Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px] bg-white text-black rounded">
+            <DialogContent className="sm:max-w-[425px] bg-white text-black" style={{borderRadius: '0.75rem'}}>
                 <DialogHeader>
                     <DialogTitle>Registre um Novo Treinador</DialogTitle>
                 </DialogHeader>
@@ -57,7 +57,7 @@ export default function Component() {
                         } else {
                             handleConfirm();
                         }
-                    }}>Adicionar</Button>
+                    }} className="text-white bg-green-500 rounded">Adicionar</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

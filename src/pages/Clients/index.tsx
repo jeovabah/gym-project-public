@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card"
 import ItemComponent from "@/components/ItemComponent/ItemComponent"
 import { api } from "@/services/api/api"
 import { useEffect, useState } from "react"
+import RegisterClientModal from "@/components/ModalContent/RegisterClientModal"
 
 interface ClientProps{
   name: string,
@@ -39,6 +40,9 @@ const Clients = () => {
       <section className="container mx-auto px-4 md:px-6 py-12 text-black">
         <div className="flex justify-between items-center mb-6 text-black" >
           <h1 className="text-2xl font-bold text-black">Listagem de Clientes</h1>
+            <RegisterClientModal
+            getClient={getClient}
+            />
         </div>
         <div className="grid gap-4">
           <Card>

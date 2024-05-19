@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import InfoComponent from "../InfoComponent/InfoComponent";
-import RegistracionClient from "../RegistracionClient/RegistracionClient";
+
 import { CalendarRelatory } from "../component/calendar-relatory";
 import { api } from "@/services/api/api";
 
@@ -23,7 +23,7 @@ const MainDashboard = () => {
       </div>
       <InfoComponent trainers={trainers} />
       <CalendarRelatory />
-      <RegistracionClient trainers={trainers} />
+      
     </main>
   );
 };

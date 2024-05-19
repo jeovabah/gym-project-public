@@ -14,13 +14,14 @@ export const DaysOfWeek = [
   "Domingo",
 ];
 
-const RegistracionClient = ({ trainers }) => {
+export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [selectedDayToPay, setSelectedDayToPay] = useState(1);
   const [name, setName] = useState("");
   const [status, setStatus] = useState(false);
   const [time, setTime] = useState("");
   const [trainerId, setTrainerId] = useState<string>("");
+  const [trainingSheetDescription,setTrainingSheetDescription] = useState("")
 
   const toggleDay = (day: string) => {
     if (selectedDays.includes(day)) {
@@ -53,11 +54,14 @@ const RegistracionClient = ({ trainers }) => {
       dayToPay: selectedDayToPay,
       daysOfWeek: daysAndTimes,
       trainerId,
+      //trainingSheetDescription,
     };
 
     await api.post("/client/add", payload);
 
     handleClear();
+    getClient()
+    setIsDialogOpen(false)
   };
 
   const handleClear = () => {
@@ -66,6 +70,7 @@ const RegistracionClient = ({ trainers }) => {
     setStatus(false);
     setSelectedDays([]);
     setSelectedDayToPay(1);
+    //setTrainingSheetDescription("")
   };
 
   return (
@@ -175,6 +180,16 @@ const RegistracionClient = ({ trainers }) => {
                   max={30}
                 />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="training-sheet">Ficha de Treino</Label>
+                <textarea
+                  id="training-sheet"
+                  className="w-full p-2 bg-gray-300 rounded"
+                  placeholder="Descrição da ficha de treino"
+                  value={trainingSheetDescription}
+                  onChange={(e) => setTrainingSheetDescription(e.target.value)}
+                />
+                </div>
               <button
                 onClick={(e) => {
                   if (name !== "") {

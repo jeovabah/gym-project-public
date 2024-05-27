@@ -29,7 +29,7 @@ export default function Component(props) {
       <DialogTrigger asChild>
         <Button variant="outline" className="rounded">Registrar Cliente</Button>
       </DialogTrigger>
-      <DialogContent className="max-sm:max-h-full overflow-y-auto sm:max-w-[440px] bg-white text-black "style={{borderRadius:'0.75rem'}}>
+      <DialogContent className="max-sm:max-h-full overflow-y-auto sm:max-w-full bg-white text-black "style={{borderRadius:'0.75rem'}}>
       <RegistracionClient 
       trainers={trainers} 
       getClient={props.getClient}

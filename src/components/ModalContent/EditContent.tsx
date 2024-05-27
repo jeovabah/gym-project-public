@@ -34,17 +34,26 @@ const EditContent = (props) => {
     const handleConfirm = async (e) => {
         // dados que serao enviados para o back end
         e.preventDefault()
+        const daysAndTimes = {};
+        selectedDays.forEach((day) => {
+          if (!daysAndTimes[day]) {
+            daysAndTimes[day] = [];
+          }
+          if (time) {
+            daysAndTimes[day].push(time);
+          }
+        });
         const payload = {
           
-          daysOfWeek: selectedDays,
+          daysOfWeek: daysAndTimes,
           name: name,
           statusPaid: status,
-          time: time,
           dayToPay: selectedDayToPay,
           dateOfBirth: dateOfBirth,
         };
         await api.put(`/client/update/${props.id}`,payload)
         
+
         handleClear()
         props.setShowEdit(false)
         props.getClient()
@@ -89,6 +98,7 @@ const EditContent = (props) => {
                         id={day.toLowerCase()}
                         name="training-days"
                         onChange={() => toggleDay(day)}
+                        
                       />
                       <label
                         className="text-sm font-normal"

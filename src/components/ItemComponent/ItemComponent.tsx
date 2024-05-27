@@ -6,7 +6,7 @@ import { api } from "@/services/api/api";
 import { useState } from "react";
 import ModalContent from "../ModalContent/ModalContent";
 import Content from "../ModalContent/Content";
-//import EditContent from "../ModalContent/EditContent";
+import EditContent from "../ModalContent/EditContent";
 
 const ItemComponent = (props) => {
   const classeDoComponente =
@@ -29,6 +29,7 @@ const ItemComponent = (props) => {
 
   const [visible, setVisible] = useState(false);
   const [showMore, setShowMore] = useState(false);
+  const [showEdit,setShowEdit] = useState(false);
   const [status, setStatus] = useState(props.status === "PAGO");
 
   return (
@@ -111,13 +112,21 @@ const ItemComponent = (props) => {
             }
           />
         </div>
-
-        {/* <div className="gap-1 md:hidden">
+        <button
+            className="mt-3 items-center gap-1"
+            onClick={() => setShowEdit(true)}
+          >
+            <span className="w-4 h-4 text-gray-500 dark:text-gray-400 cursor-pointer">
+              Editar
+            </span>
+          </button>
+        <div className="gap-1 ">
           <ModalContent
             title={"Editar Cliente"}
             showModal={showEdit}
             setShowModal={setShowEdit}
             cancelBtn={"FECHAR"}
+            className={'hidden'}
             content={
               <EditContent
                 id={props.id}
@@ -128,7 +137,7 @@ const ItemComponent = (props) => {
               />
             }
           />
-        </div> */}
+        </div>
       </TableCell>
     </TableRow>
   );

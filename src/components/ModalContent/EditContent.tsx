@@ -3,6 +3,7 @@ import { DaysOfWeek } from "../RegistracionClient/RegistracionClient"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { api } from "@/services/api/api";
+import InputDateComponent from "../InputDateComponent/InputDateComponent";
 
 
 const EditContent = (props) => {
@@ -12,6 +13,8 @@ const EditContent = (props) => {
     const [status,setStatus] = useState(false)
     const [name,setName] = useState("")
     const [time,setTime] = useState("")
+    const [dateOfBirth, setDateOfBirth] = useState("");
+    const [trainingSheetDescription,setTrainingSheetDescription] = useState("")
     
     
     const toggleDay = (day: string) => {
@@ -38,6 +41,7 @@ const EditContent = (props) => {
           statusPaid: status,
           time: time,
           dayToPay: selectedDayToPay,
+          dateOfBirth: dateOfBirth,
         };
         await api.put(`/client/update/${props.id}`,payload)
         
@@ -46,6 +50,8 @@ const EditContent = (props) => {
         props.getClient()
         
     };
+
+    //defaultChecked={props.daysOfWeek.includes(day)}
 
     const handleClear = () =>{
         setName("")
@@ -58,10 +64,16 @@ const EditContent = (props) => {
     
 
       return (
-    <form className="space-y-4">
+    <form className="space-y-4 max-sm:max-h-full overflow-y-auto sm:max-w-[440px] bg-white text-black" style={{borderRadius:'0.75rem'}}>
               <div className="space-y-2">
                 <Label htmlFor="name">Nome</Label>
                 <Input id="name" placeholder={props.clientName} required defaultValue={props.clientName} onChange={(e) =>{setName(e.target.value)}}/>
+              </div>
+              <div className="space-y-2">
+                <InputDateComponent
+                dateOfBirth={dateOfBirth}
+                setDateOfBirth={setDateOfBirth}
+                />
               </div>
               <div>
                 <Label className="font-semibold">Dias que ira treinar</Label>
@@ -76,7 +88,6 @@ const EditContent = (props) => {
                         type="checkbox"
                         id={day.toLowerCase()}
                         name="training-days"
-                        defaultChecked={props.daysOfWeek.includes(day)}
                         onChange={() => toggleDay(day)}
                       />
                       <label
@@ -98,12 +109,6 @@ const EditContent = (props) => {
                   onChange={(e)=>{setTime(e.target.value)}}
                   value={time}
                 />
-              </div>
-              <div>
-                <Label className="font-semibold">Status do pagamento</Label>
-                <div className="mt-2 flex items-center space-x-4">
-                  <input type="checkbox" className="toggle toggle-success" onChange={(e)=>{setStatus(e.target.checked)}} checked={status} />
-                </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="payment-day">Dia do pagamento</Label>
@@ -129,6 +134,16 @@ const EditContent = (props) => {
                   max={30}
                 />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="training-sheet">Ficha de Treino</Label>
+                <textarea
+                  id="training-sheet"
+                  className="w-full p-2 bg-gray-300 rounded"
+                  placeholder="Descrição da ficha de treino"
+                  value={trainingSheetDescription}
+                  onChange={(e) => setTrainingSheetDescription(e.target.value)}
+                />
+                </div>
               <button
                 onClick={(e) =>{
                     if(name != ""){
@@ -140,8 +155,8 @@ const EditContent = (props) => {
                     w-full
                     py-2
                     text-white
-                    bg-black
-                    rounded
+                    bg-green-600
+                    
                     hover:bg-black-700
                     focus:ring-2
                     focus:ring-black-500

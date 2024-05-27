@@ -3,6 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { api } from "@/services/api/api";
+import InputDateComponent from "../InputDateComponent/InputDateComponent";
 
 export const DaysOfWeek = [
   "Segunda",
@@ -18,6 +19,7 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [selectedDayToPay, setSelectedDayToPay] = useState(1);
   const [name, setName] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
   const [status, setStatus] = useState(false);
   const [time, setTime] = useState("");
   const [trainerId, setTrainerId] = useState<string>("");
@@ -54,6 +56,7 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
       dayToPay: selectedDayToPay,
       daysOfWeek: daysAndTimes,
       trainerId,
+      dateOfBirth: dateOfBirth
       //trainingSheetDescription,
     };
 
@@ -67,6 +70,7 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
   const handleClear = () => {
     setName("");
     setTime("");
+    setDateOfBirth("")
     setStatus(false);
     setSelectedDays([]);
     setSelectedDayToPay(1);
@@ -96,6 +100,12 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <InputDateComponent
+                dateOfBirth={dateOfBirth}
+                setDateOfBirth={setDateOfBirth}
                 />
               </div>
               <div>

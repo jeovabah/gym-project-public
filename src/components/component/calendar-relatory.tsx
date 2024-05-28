@@ -40,17 +40,20 @@ export function CalendarRelatory() {
               className="rounded-lg border border-gray-200 p-6 shadow-sm dark:border-gray-800"
             >
               <h3 className="text-lg font-semibold">{day}</h3>
-              {schedule[day] ? (
+              
+              {schedule[day] && Object.keys(schedule[day]).length > 0 ? (
                 Object.keys(schedule[day])
                   .sort()
                   .map((time) => (
-                    <div key={time} className="mt-2">
+                    <div key={time} className="mt-2">                      
                       <p className="font-medium">{time}</p>
+                      
                       {schedule[day][time].map((client) => (
                         <div
                           key={client.id}
                           className="flex items-center gap-2 mt-2"
                         >
+                         
                           <Avatar className="w-8 h-8 bg-white">
                             <AvatarFallback>{client.name[0]}</AvatarFallback>
                           </Avatar>
@@ -63,12 +66,14 @@ export function CalendarRelatory() {
                         </div>
                       ))}
                     </div>
+                    
                   ))
               ) : (
                 <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-                  No sessions scheduled.
+                  Todos horarios disponiveis
                 </p>
               )}
+              
             </div>
           ))}
         </div>

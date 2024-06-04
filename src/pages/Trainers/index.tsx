@@ -136,7 +136,7 @@ const Trainers = () => {
                     </TableCell>
                   </TableRow>
                   ))
-                )};
+                )}
               </TableBody>
             </Table>
           </Card>

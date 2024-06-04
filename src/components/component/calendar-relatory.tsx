@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
 import { AvatarFallback, Avatar } from "@/components/ui/avatar";
-import { api } from "@/services/api/api";
 
-export function CalendarRelatory() {
-  const [schedule, setSchedule] = useState({});
+
+export function CalendarRelatory({schedule}) {
+  
   const days = [
     "Segunda",
     "Terca",
@@ -14,18 +13,7 @@ export function CalendarRelatory() {
     "Domingo",
   ];
 
-  useEffect(() => {
-    async function fetchSchedule() {
-      try {
-        const response = await api.get("/client/daysTrainner");
-        setSchedule(response?.data?.response?.response);
-      } catch (error) {
-        console.error("Erro ao buscar os dados do calendário:", error);
-      }
-    }
 
-    fetchSchedule();
-  }, []);
 
   return (
     <section className="max-w-6xl w-full mx-auto grid gap-6">

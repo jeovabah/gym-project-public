@@ -2,27 +2,11 @@ import { UserIcon, UsersIcon } from "lucide-react";
 import CardInfo from "../CardInfo/CardInfo";
 import CardActiveTrainers from "../CardInfo/CardActiveTrainers";
 // import CardTotalClasses from "../CardInfo/CardTotalClasses";
-import { useEffect, useState } from "react";
-import { api } from "@/services/api/api";
 
-interface activeClientsProps {
-  activeClients: number;
-}
 
-const InfoComponent = ({ trainers }) => {
-  const [activeClients, setActiveClients] = useState<activeClientsProps | null>(
-    null
-  );
-  useEffect(() => {
-    getActiveClients();
-  }, []);
 
-  const getActiveClients = async () => {
-    const response = await api.get("/client/quantityAll");
-    if (response.data != null) {
-      setActiveClients(response.data.response);
-    }
-  };
+
+const InfoComponent = ({ trainers , activeClients}) => {
 
   return (
     <div className="max-w-6xl w-full mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3 text-black ">

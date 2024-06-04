@@ -14,6 +14,7 @@ import RegisterTrainerModal from "@/components/ModalContent/RegisterTrainerModal
 import ModalAlert from "@/components/ModalAlert/ModalAlert";
 import EditTrainerModal from "@/components/ModalContent/EditTrainerModal";
 import ModalContent from "@/components/ModalContent/ModalContent";
+import Loading from "@/components/component/Loading/Loading";
 
 interface TrainersProps {
   id: number;
@@ -25,12 +26,22 @@ const Trainers = () => {
   const [trainers, setTrainers] = useState<TrainersProps[]>([]);
   const [deleteTrainerId, setDeleteTrainerId] = useState<number | null>(null);
   const [showMoreId, setShowMoreId] = useState<number | null>(null);
- 
+  const [loading,setLoading] = useState(true)
   
 
   useEffect(() => {
-    getClient();
-  }, []);
+    // Função para buscar treinadores e clientes ativos
+    const fetchData = async () => {
+     try {
+       await Promise.all([getClient()]); // Espera ambas as solicitações serem completadas
+       setLoading(false); // Define o estado de carregamento como false quando os dados são carregados
+     } catch (error) {
+       console.error("Erro ao buscar dados:", error);
+     }
+   };
+
+   fetchData(); // Chama a função para buscar os dados
+ }, []);
 
   const getClient = async () => {
     const Reposta = await api.get("trainer");
@@ -65,7 +76,14 @@ const Trainers = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {trainers.map((trainer: TrainersProps) => (
+              {loading ? (
+                    <tr>
+                      <td colSpan={4} className=" justify-center items-center py-8 ">
+                        <Loading/>
+                      </td>
+                    </tr>
+                  ) :(
+                trainers.map((trainer: TrainersProps) => (
                   <TableRow key={trainer.id}>
                     <TableCell className="font-medium">{trainer.name}</TableCell>
                     <TableCell>{trainer.specialty}</TableCell>
@@ -117,13 +135,15 @@ const Trainers = () => {
                       )}
                     </TableCell>
                   </TableRow>
-                ))}
+                  ))
+                )};
               </TableBody>
             </Table>
           </Card>
         </div>
       </section>
     </div>
+    
   );
 };
 

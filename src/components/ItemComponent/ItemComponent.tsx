@@ -36,6 +36,7 @@ const ItemComponent = (props) => {
   //const maskedDate = Mask.maskBirthday(props.dateOfBirth);
   //const formattedDate = Mask.tranformMaskBirthdayInUs(maskedDate);
 const formatDate = (dateString: string): string => {
+  if (!dateString) return "";
   const date = new Date(dateString);
   const day = String(date.getUTCDate()).padStart(2, '0');
   const month = String(date.getUTCMonth() + 1).padStart(2, '0');

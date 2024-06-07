@@ -12,7 +12,8 @@ const InputDateComponent = (props) => {
             <InputMask
                 mask="99/99/9999"
                 value={props.dateOfBirth}
-                onChange={(e) => props.setDateOfBirth(e.target.value)}
+                onChange={(e) => props.setdateOfBirth(e.target.value)}
+
             >
                 {(inputProps) => (
                     <input
@@ -21,6 +22,8 @@ const InputDateComponent = (props) => {
                         id="date"
                         className="w-full p-2 bg-gray-300 rounded"
                         placeholder="DD/MM/YYYY"
+                        defaultValue={props.defaultDate}
+
                     />
                 )}
             </InputMask>

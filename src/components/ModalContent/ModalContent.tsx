@@ -32,7 +32,13 @@ const ModalContent = (props) => {
                   
                   
                   <TableHead className={props.className} >Dia de Pagamento: </TableHead>
+                  <p>
+
                   {props.paymentContent}
+                  </p>
+                  {props.trainingSheetContent}
+                  {props.birthDayContent}
+                  {props.dateOfBirthContent}
                   
                   {/*footer*/}
                   <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">

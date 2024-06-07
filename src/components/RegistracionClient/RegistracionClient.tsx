@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { api } from "@/services/api/api";
 import InputDateComponent from "../InputDateComponent/InputDateComponent";
+import { Mask } from "@/utils/mask";
 
 export const DaysOfWeek = [
   "Segunda",
@@ -19,7 +20,7 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [selectedDayToPay, setSelectedDayToPay] = useState(1);
   const [name, setName] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [dateOfBirth, setdateOfBirth] = useState("");
   const [status, setStatus] = useState(false);
   const [time, setTime] = useState("");
   const [trainerId, setTrainerId] = useState<string>("");
@@ -50,14 +51,17 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
       }
     });
 
+    const maskedDate = Mask.maskBirthday(dateOfBirth);
+    const formattedDate = Mask.tranformMaskBirthdayInUs(maskedDate);
+
     const payload = {
       name: name,
       statusPaid: status,
       dayToPay: selectedDayToPay,
       daysOfWeek: daysAndTimes,
       trainerId,
-      dateOfBirth: dateOfBirth
-      //trainingSheetDescription,
+      dateOfBirth: formattedDate,
+      trainingSheetDescription: trainingSheetDescription,
     };
 
     await api.post("/client/add", payload);
@@ -70,11 +74,11 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
   const handleClear = () => {
     setName("");
     setTime("");
-    setDateOfBirth("")
+    setdateOfBirth("")
     setStatus(false);
     setSelectedDays([]);
     setSelectedDayToPay(1);
-    //setTrainingSheetDescription("")
+    setTrainingSheetDescription("")
   };
 
   return (
@@ -105,7 +109,7 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
               <div className="space-y-2">
                 <InputDateComponent
                 dateOfBirth={dateOfBirth}
-                setDateOfBirth={setDateOfBirth}
+                setdateOfBirth={setdateOfBirth}
                 />
               </div>
               <div>

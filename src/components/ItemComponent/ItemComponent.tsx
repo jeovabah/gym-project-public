@@ -7,8 +7,11 @@ import { useState } from "react";
 import ModalContent from "../ModalContent/ModalContent";
 import Content from "../ModalContent/Content";
 import EditContent from "../ModalContent/EditContent";
+import InputDateComponent from "../InputDateComponent/InputDateComponent";
+//import { Mask } from "@/utils/mask";
 
 const ItemComponent = (props) => {
+  
   const classeDoComponente =
     props.status === "PAGO"
       ? "bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-400"
@@ -26,11 +29,22 @@ const ItemComponent = (props) => {
     });
     props.getClient();
   };
-
   const [visible, setVisible] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const [showEdit,setShowEdit] = useState(false);
   const [status, setStatus] = useState(props.status === "PAGO");
+  //const maskedDate = Mask.maskBirthday(props.dateOfBirth);
+  //const formattedDate = Mask.tranformMaskBirthdayInUs(maskedDate);
+const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const year = date.getUTCFullYear();
+  
+  return `${day}/${month}/${year}`;
+};
+
+  
 
   return (
     <TableRow>
@@ -109,6 +123,33 @@ const ItemComponent = (props) => {
                 </div>
               </TableCell>
             }
+            
+            
+            trainingSheetContent={
+              <div>
+                <h3 className="text-lg font-medium mb-4">Ficha de Treino</h3>
+                <textarea
+                  id="training-sheet"
+                  className="w-full p-2 bg-gray-300 rounded"
+                  readOnly
+                  disabled
+                  defaultValue={props.trainingSheetDescription}
+                  style={{ resize: 'none' }}
+                />
+              </div>
+            }
+
+            dateOfBirthContent={
+              <div className="mt-4" style={{pointerEvents: 'none'}}>
+                <InputDateComponent
+                  dateOfBirth={formatDate(props.dateOfBirth)}
+                  
+                  readOnly
+                  disabled
+                />
+              </div>
+            }
+            
           />
         </div>
         <button
@@ -133,6 +174,10 @@ const ItemComponent = (props) => {
                 getClient={props.getClient}
                 clientName={props.name}
                 daysOfWeek={props.daysOfWeek}
+                trainingSheetDescription={props.trainingSheetDescription}
+                selectedDays={props.selectedDays}
+                status={props.statusPaid}
+                dateOfBirth={formatDate(props.dateOfBirth)}
               />
             }
           />

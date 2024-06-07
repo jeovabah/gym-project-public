@@ -13,7 +13,10 @@ interface ClientProps {
   dayToPay: number;
   id: number;
   daysOfWeek: [{}];
+  trainingSheetDescription: string,
+  dateOfBirth: any
 }
+
 
 const Clients = () => {
   const [clients, setClients] = useState([]);
@@ -76,6 +79,8 @@ const Clients = () => {
                         key={i}
                         getClient={getClient}
                         daysOfWeek={client.daysOfWeek}
+                        trainingSheetDescription={client.trainingSheetDescription}
+                        dateOfBirth={client.dateOfBirth}
                       />
                     ))
                   )}

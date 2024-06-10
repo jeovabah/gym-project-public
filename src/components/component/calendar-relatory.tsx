@@ -50,13 +50,13 @@ export function CalendarRelatory({ schedule, trainers }) {
   return (
     <section className="max-w-6xl w-full mx-auto grid gap-6">
       <div className="container">
-        <div className="max-w-6xl flex flex-row w-full gap-2 justify-between">
+        <div className="max-w-6xl flex flex-wrap flex-row w-full gap-2 justify-between">
           <h5 className="font-semibold text-3xl">Calendario Semanal</h5>
           <select
             onChange={(e) => {
               onSelectFilter(e.target.value);
             }}
-            className="w-1/4 bg-white p-2 border border-gray-200 rounded-lg"
+            className="bg-white p-2 border border-gray-200 rounded-lg"
           >
             <option value="all">Todos</option>
             {trainers.map((trainer) => (

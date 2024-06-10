@@ -5,6 +5,7 @@ import { Label } from "../ui/label";
 import { api } from "@/services/api/api";
 import InputDateComponent from "../InputDateComponent/InputDateComponent";
 import { Mask } from "@/utils/mask";
+//import PhoneInput from "../PhoneInput/PhoneInput";
 
 const EditContent = (props) => {
   const [selectedDays, setSelectedDays] = useState<string[]>( []);
@@ -14,6 +15,7 @@ const EditContent = (props) => {
   const [time, setTime] = useState(props.time || "");
   const [dateOfBirth, setdateOfBirth] = useState(props.dateOfBirth || "");
   const [trainingSheetDescription, setTrainingSheetDescription] = useState(props.trainingSheetDescription || "");
+  //const [phoneNumber,setPhoneNumber] = useState(props.phoneNumber || '')
 
   useEffect(() => {
     setSelectedDays([]);
@@ -32,6 +34,11 @@ const EditContent = (props) => {
       setSelectedDays([...selectedDays, day]);
     }
   };
+
+  /*const handlePhoneChange = (event) => {
+    setPhoneNumber(event.target.value);
+  };*/
+
 
   const handleChange = (value, setSelected) => {
     setSelected(value);
@@ -59,8 +66,9 @@ const EditContent = (props) => {
       name: name,
       statusPaid: props.status,
       dayToPay: selectedDayToPay,
-      dateOfBirth: formattedDate,
-      trainingSheetDescription,
+      dateOfBirth: formattedDate || null,
+      trainingSheetDescription: trainingSheetDescription || null,
+      //phoneNumber,
     };
     await api.put(`/client/update/${props.id}`, payload);
     handleClear();
@@ -71,7 +79,7 @@ const EditContent = (props) => {
   const handleClear = () => {
     setName("");
     setTime("");
-    
+    //setPhoneNumber("")
     setSelectedDays([]);
     setSelectedDayToPay(1);
     setTrainingSheetDescription("");
@@ -96,6 +104,14 @@ const EditContent = (props) => {
           defaultBithday={props.dateOfBirth}
         />
       </div>
+      {/*<div>
+      <div>
+          <PhoneInput 
+          value={phoneNumber} 
+          onChange={handlePhoneChange} 
+          />
+      </div>
+      </div>*/}
       <div>
         <Label className="font-semibold">Dias que irá treinar</Label>
         <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">

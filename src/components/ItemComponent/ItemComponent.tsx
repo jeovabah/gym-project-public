@@ -179,6 +179,7 @@ const formatDate = (dateString: string): string => {
                 selectedDays={props.selectedDays}
                 status={props.statusPaid}
                 dateOfBirth={formatDate(props.dateOfBirth)}
+                //phoneNumber={props.phoneNumber}
               />
             }
           />

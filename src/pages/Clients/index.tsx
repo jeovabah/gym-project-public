@@ -15,6 +15,7 @@ interface ClientProps {
   daysOfWeek: [{}];
   trainingSheetDescription: string,
   dateOfBirth: any
+  //phoneNumber: String
 }
 
 
@@ -81,6 +82,7 @@ const Clients = () => {
                         daysOfWeek={client.daysOfWeek}
                         trainingSheetDescription={client.trainingSheetDescription}
                         dateOfBirth={client.dateOfBirth}
+                        //phoneNumber={client.phoneNumber}
                       />
                     ))
                   )}

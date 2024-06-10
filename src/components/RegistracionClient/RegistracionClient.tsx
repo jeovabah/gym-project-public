@@ -5,6 +5,7 @@ import { useState } from "react";
 import { api } from "@/services/api/api";
 import InputDateComponent from "../InputDateComponent/InputDateComponent";
 import { Mask } from "@/utils/mask";
+//import PhoneInput from "../PhoneInput/PhoneInput";
 
 export const DaysOfWeek = [
   "Segunda",
@@ -25,6 +26,13 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
   const [time, setTime] = useState("");
   const [trainerId, setTrainerId] = useState<string>("");
   const [trainingSheetDescription,setTrainingSheetDescription] = useState("")
+  //const [phoneNumber,setPhoneNumber] = useState('')
+
+ 
+
+  /*const handlePhoneChange = (event) => {
+    setPhoneNumber(event.target.value);
+  };*/
 
   const toggleDay = (day: string) => {
     if (selectedDays.includes(day)) {
@@ -41,6 +49,9 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
   const handleConfirm = async (e) => {
     e.preventDefault();
     const daysAndTimes = {};
+
+
+
 
     selectedDays.forEach((day) => {
       if (!daysAndTimes[day]) {
@@ -60,8 +71,9 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
       dayToPay: selectedDayToPay,
       daysOfWeek: daysAndTimes,
       trainerId,
-      dateOfBirth: formattedDate,
-      trainingSheetDescription: trainingSheetDescription,
+      dateOfBirth: formattedDate || null,
+      trainingSheetDescription: trainingSheetDescription || null,
+      //phoneNumber,
     };
 
     await api.post("/client/add", payload);
@@ -79,6 +91,7 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
     setSelectedDays([]);
     setSelectedDayToPay(1);
     setTrainingSheetDescription("")
+    //setPhoneNumber("")
   };
 
   return (
@@ -112,6 +125,11 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
                 setdateOfBirth={setdateOfBirth}
                 />
               </div>
+              {/*<div>
+                <PhoneInput value={phoneNumber} 
+                onChange={handlePhoneChange} 
+                />
+              </div>*/}
               <div>
                 <Label className="font-semibold">Dias que irá treinar</Label>
                 <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -206,6 +224,7 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
                 </div>
               <button
                 onClick={(e) => {
+                  
                   if (name !== "") {
                     handleConfirm(e);
                   }

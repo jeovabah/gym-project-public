@@ -37,6 +37,15 @@ const MainDashboard = () => {
     }
   };
 
+  const verifyPaymentOnThisMonth = async () => {
+    try {
+      const { data } = await api.post("/payment/verifyPaymentsClients");
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const fetchSchedule = async () => {
     const response = await api.get("/client/daysTrainner");
     setSchedule(response?.data?.response?.response);
@@ -50,6 +59,7 @@ const MainDashboard = () => {
           getActiveClients(),
           fetchSchedule(),
           getPaymentPerMonth(),
+          verifyPaymentOnThisMonth(),
         ]);
         setLoading(false);
       } catch (error) {

@@ -17,6 +17,7 @@ const MainDashboard = () => {
   );
   const [loading, setLoading] = useState(true);
   const [schedule, setSchedule] = useState({});
+  const [paymentsData, setPaymentsData] = useState([]);
 
   const getTrainers = async () => {
     const response = await api.get("/trainer");
@@ -29,23 +30,34 @@ const MainDashboard = () => {
     }
   };
 
+  const getPaymentPerMonth = async () => {
+    const { data } = await api.get("/payment/totalPaid");
+    if (data != null) {
+      setPaymentsData(data?.response);
+    }
+  };
+
   const fetchSchedule = async () => {
     const response = await api.get("/client/daysTrainner");
     setSchedule(response?.data?.response?.response);
   };
 
   useEffect(() => {
-    // Função para buscar treinadores e clientes ativos
     const fetchData = async () => {
       try {
-        await Promise.all([getTrainers(), getActiveClients(), fetchSchedule()]); // Espera ambas as solicitações serem completadas
-        setLoading(false); // Define o estado de carregamento como false quando os dados são carregados
+        await Promise.all([
+          getTrainers(),
+          getActiveClients(),
+          fetchSchedule(),
+          getPaymentPerMonth(),
+        ]);
+        setLoading(false);
       } catch (error) {
         console.error("Erro ao buscar dados:", error);
       }
     };
 
-    fetchData(); // Chama a função para buscar os dados
+    fetchData();
   }, []);
 
   return (
@@ -63,7 +75,11 @@ const MainDashboard = () => {
           <div className="max-w-6xl w-full mx-auto grid gap-2">
             <h1 className="font-semibold text-3xl">Dashboard</h1>
           </div>
-          <InfoComponent trainers={trainers} activeClients={activeClients} />
+          <InfoComponent
+            trainers={trainers}
+            activeClients={activeClients}
+            paymentsData={paymentsData}
+          />
           <CalendarRelatory schedule={schedule} trainers={trainers} />
         </main>
       </div>

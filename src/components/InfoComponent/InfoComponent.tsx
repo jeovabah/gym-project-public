@@ -1,13 +1,10 @@
-import { UserIcon, UsersIcon } from "lucide-react";
+import { UserIcon, UsersIcon, HandCoins, CoinsIcon } from "lucide-react";
 import CardInfo from "../CardInfo/CardInfo";
 import CardActiveTrainers from "../CardInfo/CardActiveTrainers";
+import { Mask } from "@/utils/mask";
 // import CardTotalClasses from "../CardInfo/CardTotalClasses";
 
-
-
-
-const InfoComponent = ({ trainers , activeClients}) => {
-
+const InfoComponent = ({ trainers, activeClients, paymentsData }) => {
   return (
     <div className="max-w-6xl w-full mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3 text-black ">
       <CardInfo
@@ -22,14 +19,23 @@ const InfoComponent = ({ trainers , activeClients}) => {
         icon={<UserIcon className="w-8 h-8 text-black dark:text-gray-400" />}
         value={trainers?.length || 0}
       />
-      {/* <CardTotalClasses
-        title="Total de Turmas"
-        description="Numero de turmas"
-        icon={
-          <CalendarIcon className="w-8 h-8 text-black dark:text-gray-400" />
-        }
-        value={68}
-      /> */}
+      <CardInfo
+        title={`Pagamentos Realizados no Mês ${
+          new Date().getMonth() + 1
+        } de ${new Date().getFullYear()}
+        `}
+        description="Valor total de pagamentos realizados no mês"
+        icon={<HandCoins className="w-8 h-8 text-black dark:text-gray-400" />}
+        value={`${Mask.formatCurrency(
+          paymentsData?.totalClientsPaidThisMonth || 0
+        )}`}
+      />
+      <CardInfo
+        title="Histórico de pagamentos anual"
+        description="Valor total de pagamentos realizados"
+        icon={<CoinsIcon className="w-8 h-8 text-black dark:text-gray-400" />}
+        value={`${Mask.formatCurrency(paymentsData?.totalPaid || 0)}`}
+      />
     </div>
   );
 };

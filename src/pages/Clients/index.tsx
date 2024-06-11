@@ -60,7 +60,7 @@ const Clients = () => {
     if(text === ""){setClientsFilter(clients); return}
 
     const filterSearch = clients.filter((client)=>{
-      if(client.name.toLowerCase().includes(text.toLowerCase())){
+      if(client.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''))){
         return client
       }
     })

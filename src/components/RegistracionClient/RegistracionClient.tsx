@@ -1,10 +1,11 @@
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { /*useEffect,*/ useState } from "react";
 import { api } from "@/services/api/api";
 import InputDateComponent from "../InputDateComponent/InputDateComponent";
 import { Mask } from "@/utils/mask";
+//import PriceModal from "../PriceModal/PriceModal";
 //import PhoneInput from "../PhoneInput/PhoneInput";
 
 export const DaysOfWeek = [
@@ -27,12 +28,21 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
   const [trainerId, setTrainerId] = useState<string>("");
   const [trainingSheetDescription,setTrainingSheetDescription] = useState("")
   //const [phoneNumber,setPhoneNumber] = useState('')
+  //const [showPriceModal, setShowPriceModal] = useState(false);
 
  
 
   /*const handlePhoneChange = (event) => {
     setPhoneNumber(event.target.value);
   };*/
+
+  /*useEffect(() => {
+ 
+    if (status) {
+      setShowPriceModal(true);
+    }
+  }, [status]);*/
+
 
   const toggleDay = (day: string) => {
     if (selectedDays.includes(day)) {
@@ -162,7 +172,7 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
                   value={time}
                 />
               </div>
-              <div>
+              {/*<div>
                 <Label className="font-semibold">Status do pagamento</Label>
                 <div className="mt-2 flex items-center space-x-4">
                   <input
@@ -171,8 +181,14 @@ export const RegistracionClient = ({ trainers,getClient,setIsDialogOpen }) => {
                     onChange={(e) => setStatus(e.target.checked)}
                     checked={status}
                   />
+                  {showPriceModal && (
+                    <PriceModal 
+                    isOpen={showPriceModal}
+                    onClose={() => setShowPriceModal(false)}
+                    />
+                  )}
                 </div>
-              </div>
+              </div>*/}
               <div className="space-y-2">
                 <Label htmlFor="trainer">Treinador</Label>
                 <select

@@ -148,6 +148,8 @@ const Clients = () => {
                       <ItemComponent
                         name={client.name}
                         status={client.statusPaid ? "PAGO" : "NAO PAGO"}
+                        statusPaid={client.statusPaid}
+                        
                         date={client.time}
                         selectedDayToPay={client.dayToPay}
                         id={client.id}

@@ -3,15 +3,31 @@ import { Badge } from "@/components/ui/badge";
 import { Banknote, Eye, Pencil, Trash2 } from "lucide-react";
 import ModalAlert from "../ModalAlert/ModalAlert";
 import { api } from "@/services/api/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModalContent from "../ModalContent/ModalContent";
 import Content from "../ModalContent/Content";
 import EditContent from "../ModalContent/EditContent";
 import InputDateComponent from "../InputDateComponent/InputDateComponent";
+import PriceModal from "../PriceModal/PriceModal";
 //import { Mask } from "@/utils/mask";
+
+interface PendingUpdate {
+  checked: boolean;
+  amountPaid: number;
+}
 
 const ItemComponent = (props) => {
   
+  const [visible, setVisible] = useState(false);
+  const [showMore, setShowMore] = useState(false);
+  const [showEdit,setShowEdit] = useState(false);
+  const [status, setStatus] = useState(props.status === "PAGO");
+  //const maskedDate = Mask.maskBirthday(props.dateOfBirth);
+  //const formattedDate = Mask.tranformMaskBirthdayInUs(maskedDate);
+  const [showPriceModal, setShowPriceModal] = useState(false);
+  const [pendingUpdate, setPendingUpdate] = useState<PendingUpdate | null>(null);
+
+
   const classeDoComponente =
     props.status === "PAGO"
       ? "bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-400"
@@ -21,20 +37,37 @@ const ItemComponent = (props) => {
     await api.delete(`/client/delete/${props.id}`);
     props.getClient();
   };
-
-  const handleUpdatePaid = async (checked) => {
+  
+  const handleUpdatePaid = async (checked,amountPaid) => {
     setStatus(checked);
     await api.put(`/client/update/${props.id}`, {
       statusPaid: checked,
+      amountPaid: amountPaid,
     });
     props.getClient();
+    console.log(amountPaid)
   };
-  const [visible, setVisible] = useState(false);
-  const [showMore, setShowMore] = useState(false);
-  const [showEdit,setShowEdit] = useState(false);
-  const [status, setStatus] = useState(props.status === "PAGO");
-  //const maskedDate = Mask.maskBirthday(props.dateOfBirth);
-  //const formattedDate = Mask.tranformMaskBirthdayInUs(maskedDate);
+
+
+  useEffect(() => {
+    if (pendingUpdate) {
+      handleUpdatePaid(pendingUpdate.checked, pendingUpdate.amountPaid);
+      setPendingUpdate(null);
+    }
+  }, [pendingUpdate]);
+  
+  const handleCheckboxChange = async (e) => {
+    const checked = e.target.checked;
+    if (checked) {
+      setShowPriceModal(true);
+    } else {
+      await handleUpdatePaid(checked, 0); // Envia 0 quando desmarcado
+    }
+  };
+
+
+
+
 const formatDate = (dateString: string): string => {
   if (!dateString) return "";
   const date = new Date(dateString);
@@ -58,11 +91,20 @@ const formatDate = (dateString: string): string => {
           <input
             type="checkbox"
             className="toggle toggle-success"
-            onChange={(e) => {
-              handleUpdatePaid(e.target.checked);
-            }}
+            onChange={handleCheckboxChange}
             checked={status}
-          />
+            
+            />
+          {showPriceModal && (
+            <PriceModal
+              isOpen={showPriceModal}
+              onClose={() => setShowPriceModal(false)}
+              onSubmit={async (amountPaid) => {
+                setShowPriceModal(false);
+                setPendingUpdate({ checked: true, amountPaid });
+              }}
+            />
+          )}
         </div>
       </TableCell>
       <TableCell className="hidden md:table-cell">
